@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #802D46;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #5C1E34;
+            padding: 20px;
+            border-radius: 10px;
+            width: 350px;
+            color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .gender-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .register-btn {
+            width: 100%;
+            background-color: white;
+            color: #5C1E34;
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .register-btn:hover {
+            background-color: #F0E0E6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <h2>Register</h2>
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Your name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Your email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" placeholder="Your phone number" required>
+
+            <label>Gender:</label>
+            <div class="gender-group">
+                <input type="radio" name="gender" value="male" id="male"><label for="male">Male</label>
+                <input type="radio" name="gender" value="female" id="female"><label for="female">Female</label>
+                <input type="radio" name="gender" value="other" id="other"><label for="other">Other</label>
+            </div>
+
+            <label for="language">Language:</label>
+            <select id="language">
+                <option>Select language</option>
+                <option value="english">English</option>
+                <option value="hindi">Hindi</option>
+                <option value="spanish">Spanish</option>
+            </select>
+
+            <label for="zip">Zip Code:</label>
+            <input type="text" id="zip" placeholder="Your zip code" required>
+
+            <label for="about">About:</label>
+            <textarea id="about" placeholder="Write about yourself..."></textarea>
+
+            <button type="submit" class="register-btn">Register</button>
+        </form>
+    </div>
+</body>
+</html>
