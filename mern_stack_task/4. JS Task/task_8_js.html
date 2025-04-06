@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #fbd3e9, #ffeb3b, #bb377d); /* Added Yellow Shade */
+            text-align: center;
+        }
+
+        h2 {
+            color: blue;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px gray;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Registration Form</h2>
+
+    <div class="container">
+        <form id="registrationForm">
+            <label>First Name:</label>
+            <input type="text" id="firstName">
+            <span class="error" id="errorFirstName"></span>
+
+            <label>Last Name:</label>
+            <input type="text" id="lastName">
+            <span class="error" id="errorLastName"></span>
+
+            <label>Email:</label>
+            <input type="email" id="email">
+            <span class="error" id="errorEmail"></span>
+
+            <label>Password:</label>
+            <input type="password" id="password">
+            <span class="error" id="errorPassword"></span>
+
+            <label>Re-enter Password:</label>
+            <input type="password" id="confirmPassword">
+            <span class="error" id="errorConfirmPassword"></span>
+
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <span class="error" id="errorGender"></span>
+
+            <label>Age:</label>
+            <input type="number" id="age">
+            <span class="error" id="errorAge"></span>
+
+            <label>Phone Number:</label>
+            <input type="text" id="phone">
+            <span class="error" id="errorPhone"></span>
+
+            <label>Address:</label>
+            <textarea id="address"></textarea>
+            <span class="error" id="errorAddress"></span>
+
+            <label>State:</label>
+            <input type="text" id="state">
+            <span class="error" id="errorState"></span>
+
+            <label>Country:</label>
+            <select id="country">
+                <option value="">Choose your country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+            </select>
+            <span class="error" id="errorCountry"></span>
+
+            <br><br>
+            <input type="checkbox" id="agree"> I agree to the terms
+            <span class="error" id="errorAgree"></span>
+
+            <br><br>
+            <button type="button" onclick="validateForm()">REGISTER</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            function setError(id, message) {
+                document.getElementById(id).innerText = message;
+                isValid = false;
+            }
+
+            function clearError(id) {
+                document.getElementById(id).innerText = "";
+            }
+
+            let firstName = document.getElementById("firstName").value.trim();
+            firstName === "" ? setError("errorFirstName", "POOR") : clearError("errorFirstName");
+
+            let lastName = document.getElementById("lastName").value.trim();
+            lastName === "" ? setError("errorLastName", "POOR") : clearError("errorLastName");
+
+            let email = document.getElementById("email").value.trim();
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            email === "" ? setError("errorEmail", "POOR") :
+                (!emailPattern.test(email) ? setError("errorEmail", "Invalid Email") : clearError("errorEmail"));
+
+            let password = document.getElementById("password").value.trim();
+            password.length < 6 ? setError("errorPassword", "Too short") : clearError("errorPassword");
+
+            let confirmPassword = document.getElementById("confirmPassword").value.trim();
+            confirmPassword !== password || confirmPassword === "" ? setError("errorConfirmPassword", "Mismatch") : clearError("errorConfirmPassword");
+
+            let gender = document.querySelector('input[name="gender"]:checked');
+            !gender ? setError("errorGender", "Select Gender") : clearError("errorGender");
+
+            let age = document.getElementById("age").value.trim();
+            age === "" || age < 18 ? setError("errorAge", "POOR (Min 18)") : clearError("errorAge");
+
+            let phone = document.getElementById("phone").value.trim();
+            let phonePattern = /^[0-9]{10}$/;
+            phone === "" ? setError("errorPhone", "POOR") :
+                (!phonePattern.test(phone) ? setError("errorPhone", "Invalid Number") : clearError("errorPhone"));
+
+            let address = document.getElementById("address").value.trim();
+            address === "" ? setError("errorAddress", "POOR") : clearError("errorAddress");
+
+            let state = document.getElementById("state").value.trim();
+            state === "" ? setError("errorState", "POOR") : clearError("errorState");
+
+            let country = document.getElementById("country").value;
+            country === "" ? setError("errorCountry", "Select Country") : clearError("errorCountry");
+
+            let agree = document.getElementById("agree").checked;
+            !agree ? setError("errorAgree", "Must Agree") : clearError("errorAgree");
+
+            if (isValid) {
+                alert("Registration Successful!");
+            }
+        }
+    </script>
+
+</body>
+</html>

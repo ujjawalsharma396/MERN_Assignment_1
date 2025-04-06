@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+
+    <!-- Welcome Section -->
+    <div class="text-center">
+        <h2>Welcome to User Management</h2>
+        <p>Use the buttons below to navigate.</p>
+        <button class="btn btn-primary" onclick="showSection('registerTab')">Register a User</button>
+        <button class="btn btn-success" onclick="showSection('viewTab')">View Registered Users</button>
+    </div>
+
+    <!-- Registration Form -->
+    <div id="registerTab" class="mt-4" style="display: none;">
+        <h3>Register User</h3>
+        <form id="registrationForm">
+            <div class="mb-3">
+                <label>Name:</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Email:</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Contact:</label>
+                <input type="text" id="contact" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Address:</label>
+                <textarea id="address" class="form-control" required></textarea>
+            </div>
+            <button type="button" onclick="registerUser()" class="btn btn-primary">Register</button>
+            <button type="button" onclick="showSection('home')" class="btn btn-secondary">Back</button>
+        </form>
+    </div>
+
+    <!-- View Users Table -->
+    <div id="viewTab" class="mt-4" style="display: none;">
+        <h3>Registered Users</h3>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody id="userTable"></tbody>
+        </table>
+        <button type="button" onclick="showSection('home')" class="btn btn-secondary">Back</button>
+    </div>
+
+    <script>
+        // Function to show/hide sections
+        function showSection(sectionId) {
+            document.getElementById("registerTab").style.display = (sectionId === "registerTab") ? "block" : "none";
+            document.getElementById("viewTab").style.display = (sectionId === "viewTab") ? "block" : "none";
+            document.querySelector(".text-center").style.display = (sectionId === "home") ? "block" : "none";
+
+            if (sectionId === "viewTab") displayUsers(); // Refresh user list
+        }
+
+        // Function to register a user and store in localStorage
+        function registerUser() {
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let contact = document.getElementById("contact").value.trim();
+            let address = document.getElementById("address").value.trim();
+
+            if (name === "" || email === "" || contact === "" || address === "") {
+                alert("Please fill all fields.");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            users.push({ name, email, contact, address });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("User Registered Successfully!");
+            document.getElementById("registrationForm").reset();
+            showSection('home');
+        }
+
+        // Function to display registered users
+        function displayUsers() {
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            let tableBody = document.getElementById("userTable");
+
+            tableBody.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.contact}</td>
+                    <td>${user.address}</td>
+                </tr>
+            `).join("");
+        }
+    </script>
+
+</body>
+</html>
